@@ -1,0 +1,237 @@
+{
+  "project": "Hospital Infection Risk Assessment",
+  "data_source": "Synthetic data generated to match the schema of the Kaggle Surgery Healthcare Dataset. NOT real patient data.",
+  "num_rows": 5000,
+  "num_columns": 21,
+  "columns": {
+    "Surgery_ID": {
+      "dtype": "object",
+      "missing": 0,
+      "unique": 5000,
+      "is_simulated": false,
+      "sample_values": [
+        "S00001",
+        "S00002",
+        "S00003",
+        "S00004",
+        "S00005"
+      ]
+    },
+    "Patient_ID": {
+      "dtype": "object",
+      "missing": 0,
+      "unique": 4866,
+      "is_simulated": false,
+      "sample_values": [
+        "P92284",
+        "P59246",
+        "P26726",
+        "P15003",
+        "P29614"
+      ]
+    },
+    "Age": {
+      "dtype": "int64",
+      "missing": 0,
+      "unique": 72,
+      "is_simulated": false,
+      "min": 18.0,
+      "max": 89.0,
+      "mean": 53.4072
+    },
+    "Gender": {
+      "dtype": "object",
+      "missing": 0,
+      "unique": 2,
+      "is_simulated": false,
+      "sample_values": [
+        "Male",
+        "Female"
+      ]
+    },
+    "Surgery_Type": {
+      "dtype": "object",
+      "missing": 0,
+      "unique": 8,
+      "is_simulated": false,
+      "sample_values": [
+        "General",
+        "Gynecological",
+        "Orthopedic",
+        "ENT",
+        "Urological"
+      ]
+    },
+    "Surgery_Duration_Min": {
+      "dtype": "int32",
+      "missing": 0,
+      "unique": 294,
+      "is_simulated": false,
+      "min": 20.0,
+      "max": 336.0,
+      "mean": 118.8904
+    },
+    "Anesthesia_Type": {
+      "dtype": "object",
+      "missing": 0,
+      "unique": 4,
+      "is_simulated": false,
+      "sample_values": [
+        "Local",
+        "General",
+        "Regional",
+        "Sedation"
+      ]
+    },
+    "Pre_Op_Risk_Level": {
+      "dtype": "object",
+      "missing": 0,
+      "unique": 3,
+      "is_simulated": false,
+      "sample_values": [
+        "Low",
+        "High",
+        "Medium"
+      ]
+    },
+    "Blood_Loss_ml": {
+      "dtype": "float64",
+      "missing": 107,
+      "unique": 505,
+      "is_simulated": false,
+      "min": 16.0,
+      "max": 653.0,
+      "mean": 185.6125076640098
+    },
+    "ICU_Required": {
+      "dtype": "object",
+      "missing": 0,
+      "unique": 2,
+      "is_simulated": false,
+      "sample_values": [
+        "No",
+        "Yes"
+      ]
+    },
+    "Complication_Risk": {
+      "dtype": "object",
+      "missing": 0,
+      "unique": 3,
+      "is_simulated": false,
+      "sample_values": [
+        "Low",
+        "High",
+        "Medium"
+      ]
+    },
+    "Recovery_Time_Days": {
+      "dtype": "int32",
+      "missing": 0,
+      "unique": 34,
+      "is_simulated": false,
+      "min": 1.0,
+      "max": 34.0,
+      "mean": 11.564
+    },
+    "Surgeon_Experience_Years": {
+      "dtype": "float64",
+      "missing": 45,
+      "unique": 29,
+      "is_simulated": false,
+      "min": 1.0,
+      "max": 29.0,
+      "mean": 14.86619576185671
+    },
+    "Hospital_ID": {
+      "dtype": "object",
+      "missing": 0,
+      "unique": 19,
+      "is_simulated": false,
+      "sample_values": [
+        "H008",
+        "H019",
+        "H016",
+        "H004",
+        "H012"
+      ]
+    },
+    "Room_Temperature_C": {
+      "dtype": "float64",
+      "missing": 127,
+      "unique": 145,
+      "is_simulated": true,
+      "min": 16.0,
+      "max": 31.6,
+      "mean": 22.835009234557766
+    },
+    "Room_Humidity_Pct": {
+      "dtype": "float64",
+      "missing": 155,
+      "unique": 653,
+      "is_simulated": true,
+      "min": 15.0,
+      "max": 95.0,
+      "mean": 54.14998968008256
+    },
+    "Room_CO2_ppm": {
+      "dtype": "float64",
+      "missing": 163,
+      "unique": 997,
+      "is_simulated": true,
+      "min": 300.0,
+      "max": 1596.0,
+      "mean": 734.9117221418235
+    },
+    "Ventilation_Status": {
+      "dtype": "object",
+      "missing": 0,
+      "unique": 3,
+      "is_simulated": true,
+      "sample_values": [
+        "Good",
+        "Moderate",
+        "Poor"
+      ]
+    },
+    "Room_Occupancy": {
+      "dtype": "int32",
+      "missing": 0,
+      "unique": 7,
+      "is_simulated": true,
+      "min": 1.0,
+      "max": 7.0,
+      "mean": 3.1474
+    },
+    "Cleaning_Interval_Hours": {
+      "dtype": "float64",
+      "missing": 89,
+      "unique": 236,
+      "is_simulated": true,
+      "min": 1.0,
+      "max": 28.0,
+      "mean": 10.673895336998575
+    },
+    "Length_of_Stay_Days": {
+      "dtype": "int32",
+      "missing": 0,
+      "unique": 37,
+      "is_simulated": true,
+      "min": 1.0,
+      "max": 37.0,
+      "mean": 13.5538
+    }
+  },
+  "target_column": "Complication_Risk",
+  "target_description": "Risk of post-operative complications (Low/Medium/High). Used as a PROXY for infection risk in this prototype. Not all complications are infections \u2014 this is documented.",
+  "simulated_columns": [
+    "Room_Temperature_C",
+    "Room_Humidity_Pct",
+    "Room_CO2_ppm",
+    "Ventilation_Status",
+    "Room_Occupancy",
+    "Cleaning_Interval_Hours",
+    "Length_of_Stay_Days"
+  ],
+  "transparency_note": "Environmental and operational variables are SIMULATED using clinically plausible ranges from published guidelines (ASHRAE, CDC, WHO). They are NOT real hospital sensor measurements.",
+  "random_seed": 42
+}

@@ -1,0 +1,82 @@
+{
+  "best_model_name": "GradientBoosting",
+  "evaluation_metrics": {
+    "RandomForest": {
+      "accuracy": 0.787,
+      "precision": 0.7852855098634791,
+      "recall": 0.787,
+      "f1_score": 0.7860410868055646,
+      "roc_auc": 0.919793678665496
+    },
+    "GradientBoosting": {
+      "accuracy": 0.797,
+      "precision": 0.7959756893142405,
+      "recall": 0.797,
+      "f1_score": 0.7964422109862364,
+      "roc_auc": 0.9312415418451415
+    },
+    "LogisticRegression": {
+      "accuracy": 0.794,
+      "precision": 0.7914361028955407,
+      "recall": 0.794,
+      "f1_score": 0.7924771206320272,
+      "roc_auc": 0.9251214293949149
+    }
+  },
+  "num_features": [
+    "Age",
+    "Surgery_Duration_Min",
+    "Blood_Loss_ml",
+    "Surgeon_Experience_Years",
+    "Room_Temperature_C",
+    "Room_Humidity_Pct",
+    "Room_CO2_ppm",
+    "Room_Occupancy",
+    "Cleaning_Interval_Hours",
+    "Length_of_Stay_Days"
+  ],
+  "cat_features": [
+    "Gender",
+    "Surgery_Type",
+    "Anesthesia_Type",
+    "Pre_Op_Risk_Level",
+    "Ventilation_Status"
+  ],
+  "encoded_feature_names": [
+    "Age",
+    "Surgery_Duration_Min",
+    "Blood_Loss_ml",
+    "Surgeon_Experience_Years",
+    "Room_Temperature_C",
+    "Room_Humidity_Pct",
+    "Room_CO2_ppm",
+    "Room_Occupancy",
+    "Cleaning_Interval_Hours",
+    "Length_of_Stay_Days",
+    "Gender_Female",
+    "Gender_Male",
+    "Surgery_Type_Cardiac",
+    "Surgery_Type_ENT",
+    "Surgery_Type_General",
+    "Surgery_Type_Gynecological",
+    "Surgery_Type_Neurological",
+    "Surgery_Type_Ophthalmic",
+    "Surgery_Type_Orthopedic",
+    "Surgery_Type_Urological",
+    "Anesthesia_Type_General",
+    "Anesthesia_Type_Local",
+    "Anesthesia_Type_Regional",
+    "Anesthesia_Type_Sedation",
+    "Pre_Op_Risk_Level_High",
+    "Pre_Op_Risk_Level_Low",
+    "Pre_Op_Risk_Level_Medium",
+    "Ventilation_Status_Good",
+    "Ventilation_Status_Moderate",
+    "Ventilation_Status_Poor"
+  ],
+  "target_mapping": {
+    "0": "LOW",
+    "1": "MEDIUM",
+    "2": "HIGH"
+  }
+}

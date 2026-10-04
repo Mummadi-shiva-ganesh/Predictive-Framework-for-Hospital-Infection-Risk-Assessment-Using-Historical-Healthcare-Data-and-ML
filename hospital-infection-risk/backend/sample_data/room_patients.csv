@@ -1,0 +1,4 @@
+room_id,patient_id,age,gender,surgery_type,surgery_duration_min,anesthesia_type,pre_op_risk_level,blood_loss_ml,surgeon_experience_years,length_of_stay_days,medical_history,previous_infection
+R101,P002,67,Female,Gynecological,120,General,Medium,200,8,5,Hypertension,No
+R101,P003,45,Male,General,90,Local,Low,100,15,3,None,No
+R101,P004,72,Female,Cardiac,240,General,High,600,20,10,Diabetes,Yes
