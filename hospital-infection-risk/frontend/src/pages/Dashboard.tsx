@@ -61,14 +61,14 @@ const INITIAL_WORKFLOW_STATE: MultiStepPredictionRequest = {
   ],
   environmental_data: {
     room_id: 'R101',
-    temperature: 29,
-    humidity: 75,
-    co2_level: 1200,
+    temperature: 22,
+    humidity: 50,
+    co2_level: 550,
   },
   operational_data: {
     room_id: 'R101',
-    ventilation_status: 'Poor',
-    cleaning_interval: 18,
+    ventilation_status: 'Good',
+    cleaning_interval: 4,
   },
 };
 

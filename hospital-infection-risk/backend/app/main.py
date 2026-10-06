@@ -127,43 +127,67 @@ def health_check():
     }
 
 @app.get("/api/sample-demo")
-def get_sample_demo_data():
-    """Returns sample datasets for 1-click UI testing."""
-    base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-    sample_dir = os.path.join(base_dir, "sample_data")
-    
-    cp_path = os.path.join(sample_dir, "current_patient.csv")
-    rp_path = os.path.join(sample_dir, "room_patients.csv")
-    env_path = os.path.join(sample_dir, "environmental_data.csv")
-    op_path = os.path.join(sample_dir, "operational_data.csv")
-
-    try:
-        current_patient = pd.read_csv(cp_path, comment='#').to_dict(orient="records")[0]
-        room_patients = pd.read_csv(rp_path, comment='#').to_dict(orient="records")
-        env_raw = pd.read_csv(env_path, comment='#').to_dict(orient="records")[0]
-        op_raw = pd.read_csv(op_path, comment='#').to_dict(orient="records")[0]
-
-        environmental_data = {
-            "room_id": str(env_raw.get("room_id", "R101")),
-            "temperature": float(env_raw.get("temperature", 29.0)),
-            "humidity": float(env_raw.get("humidity", 75.0)),
-            "co2_level": float(env_raw.get("co2_level", 1200.0))
+def get_sample_demo_data(patient_type: str = "P002"):
+    """Returns sample datasets for 1-click UI testing with normal baseline room conditions."""
+    test_cases = {
+        "P001": {
+            "patient_id": "P001", "age": 74, "gender": "Male", "surgery_type": "Cardiac",
+            "surgery_duration_min": 280, "anesthesia_type": "General", "pre_op_risk_level": "High",
+            "blood_loss_ml": 650, "surgeon_experience_years": 8, "length_of_stay_days": 12,
+            "medical_history": "Diabetes", "previous_infection": "Yes"
+        },
+        "P002": {
+            "patient_id": "P002", "age": 26, "gender": "Female", "surgery_type": "Ophthalmic",
+            "surgery_duration_min": 40, "anesthesia_type": "Local", "pre_op_risk_level": "Low",
+            "blood_loss_ml": 30, "surgeon_experience_years": 22, "length_of_stay_days": 2,
+            "medical_history": "None", "previous_infection": "No"
+        },
+        "P003": {
+            "patient_id": "P003", "age": 52, "gender": "Male", "surgery_type": "General",
+            "surgery_duration_min": 110, "anesthesia_type": "General", "pre_op_risk_level": "Medium",
+            "blood_loss_ml": 220, "surgeon_experience_years": 15, "length_of_stay_days": 5,
+            "medical_history": "Hypertension", "previous_infection": "No"
+        },
+        "P004": {
+            "patient_id": "P004", "age": 68, "gender": "Female", "surgery_type": "Orthopedic",
+            "surgery_duration_min": 210, "anesthesia_type": "Regional", "pre_op_risk_level": "High",
+            "blood_loss_ml": 480, "surgeon_experience_years": 10, "length_of_stay_days": 9,
+            "medical_history": "Osteoporosis", "previous_infection": "No"
+        },
+        "P005": {
+            "patient_id": "P005", "age": 34, "gender": "Male", "surgery_type": "ENT",
+            "surgery_duration_min": 65, "anesthesia_type": "Sedation", "pre_op_risk_level": "Low",
+            "blood_loss_ml": 75, "surgeon_experience_years": 18, "length_of_stay_days": 3,
+            "medical_history": "None", "previous_infection": "No"
         }
+    }
 
-        operational_data = {
-            "room_id": str(op_raw.get("room_id", "R101")),
-            "ventilation_status": str(op_raw.get("ventilation_status", "Poor")),
-            "cleaning_interval": float(op_raw.get("cleaning_interval", 18.0))
-        }
+    cp = test_cases.get(patient_type, test_cases["P002"])
 
-        return {
-            "current_patient": current_patient,
-            "room_patients": room_patients,
-            "environmental_data": environmental_data,
-            "operational_data": operational_data
-        }
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Failed to load sample demo data: {str(e)}")
+    room_patients = [
+        {"room_id": "R101", "patient_id": "P003", "age": 52, "gender": "Male", "surgery_type": "General", "length_of_stay_days": 5},
+        {"room_id": "R101", "patient_id": "P005", "age": 34, "gender": "Male", "surgery_type": "ENT", "length_of_stay_days": 3}
+    ]
+
+    environmental_data = {
+        "room_id": "R101",
+        "temperature": 22.0,
+        "humidity": 50.0,
+        "co2_level": 550.0
+    }
+
+    operational_data = {
+        "room_id": "R101",
+        "ventilation_status": "Good",
+        "cleaning_interval": 4.0
+    }
+
+    return {
+        "current_patient": cp,
+        "room_patients": room_patients,
+        "environmental_data": environmental_data,
+        "operational_data": operational_data
+    }
 
 def validate_prediction_workflow(req: MultiStepPredictionRequest):
     """Validates structural integrity, room ID matching, and patient ID uniqueness."""
