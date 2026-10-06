@@ -1,0 +1,2 @@
+patient_id,age,gender,surgery_type,surgery_duration_min,anesthesia_type,pre_op_risk_level,blood_loss_ml,surgeon_experience_years,length_of_stay_days,medical_history,previous_infection
+P003,52,Male,General,110,General,Medium,220,15,5,Hypertension,No

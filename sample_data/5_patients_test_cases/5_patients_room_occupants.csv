@@ -1,0 +1,5 @@
+room_id,patient_id,age,gender,surgery_type,surgery_duration_min,anesthesia_type,pre_op_risk_level,blood_loss_ml,surgeon_experience_years,length_of_stay_days,medical_history,previous_infection
+R101,P002,26,Female,Ophthalmic,40,Local,Low,30,22,2,None,No
+R101,P003,52,Male,General,110,General,Medium,220,15,5,Hypertension,No
+R101,P004,68,Female,Orthopedic,210,Regional,High,480,10,9,Osteoporosis,No
+R101,P005,34,Male,ENT,65,Sedation,Low,75,18,3,None,No
