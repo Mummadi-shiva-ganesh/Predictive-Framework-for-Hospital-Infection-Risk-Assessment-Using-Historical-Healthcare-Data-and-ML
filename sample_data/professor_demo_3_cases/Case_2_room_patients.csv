@@ -1,0 +1,3 @@
+room_id,patient_id,age,gender,surgery_type,length_of_stay_days,medical_history,previous_infection,pre_op_risk_level
+R202,P_ROOM_A,48,Female,Gynecological,4,None,No,Low
+R202,P_ROOM_B,62,Male,Urological,5,Hypertension,No,Medium

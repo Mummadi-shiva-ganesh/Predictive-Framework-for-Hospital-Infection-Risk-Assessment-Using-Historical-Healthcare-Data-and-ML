@@ -1,0 +1,5 @@
+room_id,patient_id,age,gender,surgery_type,length_of_stay_days,medical_history,previous_infection,pre_op_risk_level
+R303,P_ROOM_1,68,Female,Orthopedic,9,Osteoporosis,No,High
+R303,P_ROOM_2,71,Male,General,11,Hypertension,No,Medium
+R303,P_ROOM_3,65,Male,Cardiac,8,Diabetes,Yes,High
+R303,P_ROOM_4,59,Female,Neurological,10,None,No,Medium

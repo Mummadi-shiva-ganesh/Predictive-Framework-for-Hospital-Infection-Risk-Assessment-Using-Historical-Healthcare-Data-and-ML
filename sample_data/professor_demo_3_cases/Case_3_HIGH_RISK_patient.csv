@@ -1,0 +1,2 @@
+patient_id,age,gender,surgery_type,surgery_duration_min,anesthesia_type,pre_op_risk_level,blood_loss_ml,surgeon_experience_years,length_of_stay_days,medical_history,previous_infection
+P_HIGH_303,76,Male,Cardiac,310,General,High,750,7,14,Diabetes,Yes

@@ -1,0 +1,2 @@
+patient_id,age,gender,surgery_type,surgery_duration_min,anesthesia_type,pre_op_risk_level,blood_loss_ml,surgeon_experience_years,length_of_stay_days,medical_history,previous_infection
+P_LOW_101,28,Female,Ophthalmic,35,Local,Low,25,20,1,None,No
