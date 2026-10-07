@@ -72,6 +72,14 @@ const INITIAL_WORKFLOW_STATE: MultiStepPredictionRequest = {
   },
 };
 
+const STEPS = [
+  { step: 1, label: 'Patient Data', icon: '👤' },
+  { step: 2, label: 'Room Context', icon: '🏥' },
+  { step: 3, label: 'Environment', icon: '🌡️' },
+  { step: 4, label: 'Operations', icon: '🧹' },
+  { step: 5, label: 'Review & Predict', icon: '📊' },
+];
+
 export default function Dashboard() {
   const [currentStep, setCurrentStep] = useState<number>(1);
   const [formData, setFormData] = useState<MultiStepPredictionRequest>(INITIAL_WORKFLOW_STATE);
@@ -118,70 +126,95 @@ export default function Dashboard() {
       <Header />
 
       <main className="main-content">
-        {error && <div className="error-banner">{error}</div>}
+        {error && (
+          <div className="error-banner">
+            <span className="error-icon">⚠️</span>
+            <span>{error}</span>
+          </div>
+        )}
 
         {!result ? (
           <>
             {/* Top Quick Actions & Stepper Navigation */}
             <div className="workflow-top-bar">
-              <div className="stepper-pills">
-                <button className={`step-pill ${currentStep === 1 ? 'active' : ''}`} onClick={() => setCurrentStep(1)}>1. Patient</button>
-                <button className={`step-pill ${currentStep === 2 ? 'active' : ''}`} onClick={() => setCurrentStep(2)}>2. Room Patients</button>
-                <button className={`step-pill ${currentStep === 3 ? 'active' : ''}`} onClick={() => setCurrentStep(3)}>3. Environment</button>
-                <button className={`step-pill ${currentStep === 4 ? 'active' : ''}`} onClick={() => setCurrentStep(4)}>4. Operations</button>
-                <button className={`step-pill ${currentStep === 5 ? 'active' : ''}`} onClick={() => setCurrentStep(5)}>5. Review & Predict</button>
-              </div>
+              <nav className="stepper-nav" aria-label="Assessment Progress">
+                {STEPS.map((s) => {
+                  const isActive = currentStep === s.step;
+                  const isDone = currentStep > s.step;
+                  return (
+                    <button
+                      key={s.step}
+                      type="button"
+                      className={`step-pill ${isActive ? 'active' : ''} ${isDone ? 'completed' : ''}`}
+                      onClick={() => setCurrentStep(s.step)}
+                    >
+                      <span className="step-pill-number">
+                        {isDone ? '✓' : s.step}
+                      </span>
+                      <span className="step-pill-title">{s.label}</span>
+                    </button>
+                  );
+                })}
+              </nav>
 
-              <button className="btn-demo-quick" onClick={handleLoadDemoData} disabled={isLoading}>
-                ⚡ Load Sample Demo Files (1-Click Test)
+              <button
+                type="button"
+                className="btn-demo-quick"
+                onClick={handleLoadDemoData}
+                disabled={isLoading}
+              >
+                <span className="btn-icon">⚡</span>
+                <span>Load Sample Case (1-Click Test)</span>
               </button>
             </div>
 
             {/* Step Components */}
-            {currentStep === 1 && (
-              <Step1CurrentPatient
-                patient={formData.current_patient}
-                onChange={(cp) => setFormData(prev => ({ ...prev, current_patient: cp }))}
-                onNext={() => setCurrentStep(2)}
-              />
-            )}
+            <div className="step-content-wrapper">
+              {currentStep === 1 && (
+                <Step1CurrentPatient
+                  patient={formData.current_patient}
+                  onChange={(cp) => setFormData((prev) => ({ ...prev, current_patient: cp }))}
+                  onNext={() => setCurrentStep(2)}
+                />
+              )}
 
-            {currentStep === 2 && (
-              <Step2RoomPatients
-                currentPatient={formData.current_patient}
-                roomPatients={formData.room_patients}
-                onChange={(rpList) => setFormData(prev => ({ ...prev, room_patients: rpList }))}
-                onNext={() => setCurrentStep(3)}
-                onPrev={() => setCurrentStep(1)}
-              />
-            )}
+              {currentStep === 2 && (
+                <Step2RoomPatients
+                  currentPatient={formData.current_patient}
+                  roomPatients={formData.room_patients}
+                  onChange={(rpList) => setFormData((prev) => ({ ...prev, room_patients: rpList }))}
+                  onNext={() => setCurrentStep(3)}
+                  onPrev={() => setCurrentStep(1)}
+                />
+              )}
 
-            {currentStep === 3 && (
-              <Step3Environmental
-                data={formData.environmental_data}
-                onChange={(env) => setFormData(prev => ({ ...prev, environmental_data: env }))}
-                onNext={() => setCurrentStep(4)}
-                onPrev={() => setCurrentStep(2)}
-              />
-            )}
+              {currentStep === 3 && (
+                <Step3Environmental
+                  data={formData.environmental_data}
+                  onChange={(env) => setFormData((prev) => ({ ...prev, environmental_data: env }))}
+                  onNext={() => setCurrentStep(4)}
+                  onPrev={() => setCurrentStep(2)}
+                />
+              )}
 
-            {currentStep === 4 && (
-              <Step4Operational
-                data={formData.operational_data}
-                onChange={(op) => setFormData(prev => ({ ...prev, operational_data: op }))}
-                onNext={() => setCurrentStep(5)}
-                onPrev={() => setCurrentStep(3)}
-              />
-            )}
+              {currentStep === 4 && (
+                <Step4Operational
+                  data={formData.operational_data}
+                  onChange={(op) => setFormData((prev) => ({ ...prev, operational_data: op }))}
+                  onNext={() => setCurrentStep(5)}
+                  onPrev={() => setCurrentStep(3)}
+                />
+              )}
 
-            {currentStep === 5 && (
-              <Step5Review
-                data={formData}
-                onPredict={handlePredict}
-                onPrev={() => setCurrentStep(4)}
-                isLoading={isLoading}
-              />
-            )}
+              {currentStep === 5 && (
+                <Step5Review
+                  data={formData}
+                  onPredict={handlePredict}
+                  onPrev={() => setCurrentStep(4)}
+                  isLoading={isLoading}
+                />
+              )}
+            </div>
           </>
         ) : (
           <RiskResult result={result} onReset={handleReset} />

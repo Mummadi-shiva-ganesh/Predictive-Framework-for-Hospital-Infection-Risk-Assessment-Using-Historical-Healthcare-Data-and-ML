@@ -57,11 +57,21 @@ export default function Step1CurrentPatient({ patient, onChange, onNext }: Props
   return (
     <div className="workflow-step-card">
       <div className="step-header">
-        <span className="step-number">Step 1</span>
-        <h2>Upload Current Patient Details</h2>
+        <div className="step-header-left">
+          <span className="step-number">Step 01</span>
+          <div>
+            <h2>Current Surgical Patient</h2>
+            <p className="step-subtitle">Upload clinical profile or review the active patient's surgical variables</p>
+          </div>
+        </div>
       </div>
 
-      {error && <div className="error-banner">{error}</div>}
+      {error && (
+        <div className="error-banner">
+          <span className="error-icon">⚠️</span>
+          <span>{error}</span>
+        </div>
+      )}
 
       <div className="upload-box">
         <input
@@ -72,30 +82,68 @@ export default function Step1CurrentPatient({ patient, onChange, onNext }: Props
           className="file-input"
         />
         <label htmlFor="current-patient-upload" className="upload-label">
-          📁 <strong>Click to Upload Patient File</strong> (CSV, JSON, XLSX)
+          <div className="upload-icon-circle">📂</div>
+          <div className="upload-text-group">
+            <span className="upload-title">Click to upload patient record</span>
+            <span className="upload-hint">Supports CSV, JSON, or XLSX (e.g., patient_P001_high_risk.csv)</span>
+          </div>
         </label>
-        {fileName && <p className="uploaded-file-name">Uploaded: <strong>{fileName}</strong></p>}
+        {fileName && (
+          <div className="uploaded-file-chip">
+            <span className="chip-icon">📄</span>
+            <span className="chip-name">{fileName}</span>
+            <span className="chip-badge">Loaded</span>
+          </div>
+        )}
       </div>
 
       <div className="preview-card">
-        <h3>Patient Record Preview</h3>
+        <div className="preview-card-header">
+          <h3>Active Patient Data Summary</h3>
+          <span className="patient-id-tag">{patient.patient_id}</span>
+        </div>
         <div className="preview-grid">
-          <div><span>Patient ID:</span> <strong>{patient.patient_id}</strong></div>
-          <div><span>Age:</span> <strong>{patient.age} years</strong></div>
-          <div><span>Gender:</span> <strong>{patient.gender}</strong></div>
-          <div><span>Surgery Type:</span> <strong>{patient.surgery_type}</strong></div>
-          <div><span>Duration:</span> <strong>{patient.surgery_duration_min} mins</strong></div>
-          <div><span>Pre-Op Risk:</span> <strong className={`risk-tag-${patient.pre_op_risk_level.toLowerCase()}`}>{patient.pre_op_risk_level}</strong></div>
-          <div><span>Blood Loss:</span> <strong>{patient.blood_loss_ml} ml</strong></div>
-          <div><span>Surgeon Experience:</span> <strong>{patient.surgeon_experience_years} yrs</strong></div>
-          <div><span>Length of Stay:</span> <strong>{patient.length_of_stay_days} days</strong></div>
-          <div><span>Medical History:</span> <strong>{patient.medical_history || 'None'}</strong></div>
+          <div className="data-metric">
+            <span className="metric-label">Age & Gender</span>
+            <strong className="metric-value">{patient.age} yrs • {patient.gender}</strong>
+          </div>
+          <div className="data-metric">
+            <span className="metric-label">Procedure</span>
+            <strong className="metric-value">{patient.surgery_type}</strong>
+          </div>
+          <div className="data-metric">
+            <span className="metric-label">Surgery Duration</span>
+            <strong className="metric-value">{patient.surgery_duration_min} mins</strong>
+          </div>
+          <div className="data-metric">
+            <span className="metric-label">Pre-Op Risk Rating</span>
+            <span className={`risk-badge-pill risk-${patient.pre_op_risk_level.toLowerCase()}`}>
+              {patient.pre_op_risk_level}
+            </span>
+          </div>
+          <div className="data-metric">
+            <span className="metric-label">Blood Loss</span>
+            <strong className="metric-value">{patient.blood_loss_ml} ml</strong>
+          </div>
+          <div className="data-metric">
+            <span className="metric-label">Surgeon Experience</span>
+            <strong className="metric-value">{patient.surgeon_experience_years} years</strong>
+          </div>
+          <div className="data-metric">
+            <span className="metric-label">Length of Stay</span>
+            <strong className="metric-value">{patient.length_of_stay_days} days</strong>
+          </div>
+          <div className="data-metric">
+            <span className="metric-label">Medical History</span>
+            <strong className="metric-value">{patient.medical_history || 'None'}</strong>
+          </div>
         </div>
       </div>
 
       <div className="step-footer">
-        <button className="btn-primary" onClick={onNext}>
-          Next: Room Patients →
+        <button type="button" className="btn-primary" onClick={onNext}>
+          <span>Continue to Room Context</span>
+          <span className="btn-arrow">→</span>
         </button>
       </div>
     </div>

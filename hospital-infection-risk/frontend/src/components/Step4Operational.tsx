@@ -20,45 +20,76 @@ export default function Step4Operational({ data, onChange, onNext, onPrev }: Pro
   return (
     <div className="workflow-step-card">
       <div className="step-header">
-        <span className="step-number">Step 4</span>
-        <h2>Operational Conditions <span className="simulated-badge">[SIMULATED DATA]</span></h2>
+        <div className="step-header-left">
+          <span className="step-number">Step 04</span>
+          <div>
+            <div className="title-with-badge">
+              <h2>Hospital Operational Safeguards</h2>
+              <span className="simulated-badge">SIMULATED PROTOCOLS</span>
+            </div>
+            <p className="step-subtitle">Sanitation cycles and HVAC filtration parameters controlling surface and aerosol bacterial load</p>
+          </div>
+        </div>
       </div>
 
       <div className="preview-card">
-        <h3>Operational Parameters</h3>
+        <div className="preview-card-header">
+          <h3>Infection Control Protocols</h3>
+          <span className="room-id-tag">Ward Room {data.room_id}</span>
+        </div>
+
         <div className="form-grid">
-          <div className="form-group">
-            <label>Ventilation Status</label>
-            <select
-              name="ventilation_status"
-              value={data.ventilation_status}
-              onChange={handleInputChange}
-            >
-              <option value="Good">Good</option>
-              <option value="Moderate">Moderate</option>
-              <option value="Poor">Poor</option>
-            </select>
+          <div className="form-group-card">
+            <div className="param-header">
+              <span className="param-icon">💨</span>
+              <label htmlFor="ventilation-select">Ventilation & Air Exchanges</label>
+            </div>
+            <div className="select-wrapper">
+              <select
+                id="ventilation-select"
+                name="ventilation_status"
+                value={data.ventilation_status}
+                onChange={handleInputChange}
+                className="custom-select"
+              >
+                <option value="Good">Good (HEPA / ≥12 ACH Standard)</option>
+                <option value="Moderate">Moderate (6 - 11 ACH Normal)</option>
+                <option value="Poor">Poor (&lt;6 ACH Insufficient)</option>
+              </select>
+            </div>
+            <span className="param-guide">Optimal: Good Air Filtration</span>
           </div>
-          <div className="form-group">
-            <label>Cleaning Interval (Hours)</label>
-            <input
-              type="number"
-              name="cleaning_interval"
-              min="1"
-              max="48"
-              value={data.cleaning_interval}
-              onChange={handleInputChange}
-            />
+
+          <div className="form-group-card">
+            <div className="param-header">
+              <span className="param-icon">🧹</span>
+              <label htmlFor="cleaning-input">Sanitization & Cleaning Interval</label>
+            </div>
+            <div className="input-with-unit">
+              <input
+                id="cleaning-input"
+                type="number"
+                name="cleaning_interval"
+                min="1"
+                max="48"
+                step="0.5"
+                value={data.cleaning_interval}
+                onChange={handleInputChange}
+              />
+              <span className="unit-label">Hours</span>
+            </div>
+            <span className="param-guide">Target: ≤ 6 hours between disinfections</span>
           </div>
         </div>
       </div>
 
       <div className="step-footer flex-between">
-        <button className="btn-secondary" onClick={onPrev}>
-          ← Back
+        <button type="button" className="btn-secondary" onClick={onPrev}>
+          ← Previous
         </button>
-        <button className="btn-primary" onClick={onNext}>
-          Next: Review & Confirm →
+        <button type="button" className="btn-primary" onClick={onNext}>
+          <span>Continue to Final Review</span>
+          <span className="btn-arrow">→</span>
         </button>
       </div>
     </div>

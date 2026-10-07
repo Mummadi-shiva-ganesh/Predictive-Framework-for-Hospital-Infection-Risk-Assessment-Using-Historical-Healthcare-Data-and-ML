@@ -9,11 +9,19 @@ export default function Recommendations({ recommendations }: Props) {
 
   return (
     <div className="recommendations-card">
-      <h3>Preventive Recommendations</h3>
+      <div className="section-card-header">
+        <div className="section-icon-pill green">📋</div>
+        <div>
+          <h3>Actionable Clinical Recommendations</h3>
+          <p className="section-card-sub">Infection control & surveillance mitigation strategies</p>
+        </div>
+      </div>
+
       <ul className="recommendations-list">
         {recommendations.map((rec, idx) => (
           <li key={idx} className="recommendation-item">
-            {rec}
+            <span className="rec-check-icon">✓</span>
+            <span className="rec-text">{rec}</span>
           </li>
         ))}
       </ul>

@@ -60,11 +60,21 @@ export default function Step2RoomPatients({ currentPatient, roomPatients, onChan
   return (
     <div className="workflow-step-card">
       <div className="step-header">
-        <span className="step-number">Step 2</span>
-        <h2>Patients Currently in the Room</h2>
+        <div className="step-header-left">
+          <span className="step-number">Step 02</span>
+          <div>
+            <h2>Room Co-Occupancy Context</h2>
+            <p className="step-subtitle">Inspect co-occupants in the same ward to assess cross-transmission risk</p>
+          </div>
+        </div>
       </div>
 
-      {error && <div className="error-banner">{error}</div>}
+      {error && (
+        <div className="error-banner">
+          <span className="error-icon">⚠️</span>
+          <span>{error}</span>
+        </div>
+      )}
 
       <div className="upload-box">
         <input
@@ -75,54 +85,84 @@ export default function Step2RoomPatients({ currentPatient, roomPatients, onChan
           className="file-input"
         />
         <label htmlFor="room-patients-upload" className="upload-label">
-          📁 <strong>Upload Room Patients File (room_patients.csv)</strong>
+          <div className="upload-icon-circle">🏥</div>
+          <div className="upload-text-group">
+            <span className="upload-title">Upload co-occupant patient list</span>
+            <span className="upload-hint">Upload 5_patients_room_occupants.csv or other ward records</span>
+          </div>
         </label>
-        {fileName && <p className="uploaded-file-name">Uploaded: <strong>{fileName}</strong></p>}
+        {fileName && (
+          <div className="uploaded-file-chip">
+            <span className="chip-icon">📄</span>
+            <span className="chip-name">{fileName}</span>
+            <span className="chip-badge">Loaded</span>
+          </div>
+        )}
       </div>
 
       <div className="occupancy-summary-bar">
-        <span>Room ID: <strong>{roomId}</strong></span>
-        <span className="occupancy-badge">Total Room Occupancy: <strong>{calculatedOccupancy} occupants</strong> (1 Current + {roomPatients.length} Room)</span>
+        <div className="occupancy-info">
+          <span className="occupancy-label">Target Room:</span>
+          <span className="occupancy-room-badge">{roomId}</span>
+        </div>
+        <div className="occupancy-pill">
+          <span className="dot-indicator"></span>
+          <span>Total Occupancy: <strong>{calculatedOccupancy} Patients</strong> (1 Current + {roomPatients.length} Co-occupants)</span>
+        </div>
       </div>
 
       <div className="preview-card">
-        <h3>Other Patients in Room</h3>
+        <div className="preview-card-header">
+          <h3>Other Patients in Room</h3>
+          <span className="count-pill">{roomPatients.length} Records</span>
+        </div>
         {roomPatients.length === 0 ? (
-          <p className="muted-text">No other patients added to this room yet.</p>
+          <div className="empty-state">
+            <p className="muted-text">No other patients currently mapped to this room.</p>
+          </div>
         ) : (
-          <table className="patients-table">
-            <thead>
-              <tr>
-                <th>Patient ID</th>
-                <th>Age</th>
-                <th>Gender</th>
-                <th>Surgery Type</th>
-                <th>Length of Stay</th>
-                <th>Medical History</th>
-              </tr>
-            </thead>
-            <tbody>
-              {roomPatients.map((p, i) => (
-                <tr key={i}>
-                  <td><strong>{p.patient_id}</strong></td>
-                  <td>{p.age} yrs</td>
-                  <td>{p.gender}</td>
-                  <td>{p.surgery_type}</td>
-                  <td>{p.length_of_stay_days} days</td>
-                  <td>{p.medical_history || 'None'}</td>
+          <div className="table-responsive">
+            <table className="patients-table">
+              <thead>
+                <tr>
+                  <th>Patient ID</th>
+                  <th>Age & Sex</th>
+                  <th>Procedure</th>
+                  <th>Pre-Op Risk</th>
+                  <th>Stay Length</th>
+                  <th>History</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {roomPatients.map((p, i) => (
+                  <tr key={i}>
+                    <td>
+                      <span className="patient-id-cell">{p.patient_id}</span>
+                    </td>
+                    <td>{p.age} yrs • {p.gender}</td>
+                    <td>{p.surgery_type}</td>
+                    <td>
+                      <span className={`risk-badge-pill-sm risk-${(p.pre_op_risk_level || 'low').toLowerCase()}`}>
+                        {p.pre_op_risk_level || 'Low'}
+                      </span>
+                    </td>
+                    <td>{p.length_of_stay_days} days</td>
+                    <td>{p.medical_history || 'None'}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         )}
       </div>
 
       <div className="step-footer flex-between">
-        <button className="btn-secondary" onClick={onPrev}>
-          ← Back
+        <button type="button" className="btn-secondary" onClick={onPrev}>
+          ← Previous
         </button>
-        <button className="btn-primary" onClick={onNext}>
-          Next: Environmental →
+        <button type="button" className="btn-primary" onClick={onNext}>
+          <span>Continue to Environmental</span>
+          <span className="btn-arrow">→</span>
         </button>
       </div>
     </div>

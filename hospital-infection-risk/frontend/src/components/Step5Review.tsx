@@ -19,51 +19,136 @@ export default function Step5Review({ data, onPredict, onPrev, isLoading }: Prop
   return (
     <div className="workflow-step-card">
       <div className="step-header">
-        <span className="step-number">Step 5</span>
-        <h2>Review Uploaded Data & Confirm</h2>
+        <div className="step-header-left">
+          <span className="step-number">Step 05</span>
+          <div>
+            <h2>Review Holistic Multi-Source Variables</h2>
+            <p className="step-subtitle">Verify patient clinical factors, ward occupancy, environmental readings, and sanitation metrics before ML execution</p>
+          </div>
+        </div>
       </div>
 
       <div className="review-summary-grid">
         {/* Current Patient */}
         <div className="review-block">
-          <h3>👤 Current Patient Details</h3>
-          <p><strong>Patient ID:</strong> {cp.patient_id}</p>
-          <p><strong>Age / Gender:</strong> {cp.age} yrs | {cp.gender}</p>
-          <p><strong>Surgery:</strong> {cp.surgery_type} ({cp.surgery_duration_min} mins)</p>
-          <p><strong>Pre-Op Risk:</strong> <span className={`risk-tag-${cp.pre_op_risk_level.toLowerCase()}`}>{cp.pre_op_risk_level}</span></p>
-          <p><strong>Length of Stay:</strong> {cp.length_of_stay_days} days</p>
+          <div className="review-block-header">
+            <span className="block-icon">👤</span>
+            <h3>Active Surgical Patient</h3>
+          </div>
+          <div className="review-block-body">
+            <div className="review-row">
+              <span className="label">Patient ID</span>
+              <strong className="value">{cp.patient_id}</strong>
+            </div>
+            <div className="review-row">
+              <span className="label">Age & Gender</span>
+              <span className="value">{cp.age} yrs • {cp.gender}</span>
+            </div>
+            <div className="review-row">
+              <span className="label">Surgical Procedure</span>
+              <span className="value">{cp.surgery_type} ({cp.surgery_duration_min} mins)</span>
+            </div>
+            <div className="review-row">
+              <span className="label">Pre-Operative Risk</span>
+              <span className={`risk-badge-pill-sm risk-${cp.pre_op_risk_level.toLowerCase()}`}>
+                {cp.pre_op_risk_level}
+              </span>
+            </div>
+            <div className="review-row">
+              <span className="label">Hospital Stay</span>
+              <span className="value">{cp.length_of_stay_days} days</span>
+            </div>
+          </div>
         </div>
 
         {/* Room Patients & Occupancy */}
         <div className="review-block">
-          <h3>🏥 Room Occupancy & Patients</h3>
-          <p><strong>Room ID:</strong> {env.room_id}</p>
-          <p><strong>Total Occupants:</strong> <span className="highlight-tag">{totalOccupancy} Patients</span></p>
-          <p><strong>Other Patients in Room:</strong> {rpList.length > 0 ? rpList.map(p => p.patient_id).join(', ') : 'None'}</p>
+          <div className="review-block-header">
+            <span className="block-icon">🏥</span>
+            <h3>Ward Room & Co-Occupancy</h3>
+          </div>
+          <div className="review-block-body">
+            <div className="review-row">
+              <span className="label">Target Room</span>
+              <strong className="value room-pill">{env.room_id}</strong>
+            </div>
+            <div className="review-row">
+              <span className="label">Total Occupancy</span>
+              <span className="highlight-tag">{totalOccupancy} Active Patients</span>
+            </div>
+            <div className="review-row">
+              <span className="label">Co-Occupants in Room</span>
+              <span className="value text-truncate">
+                {rpList.length > 0 ? rpList.map((p) => p.patient_id).join(', ') : 'None'}
+              </span>
+            </div>
+          </div>
         </div>
 
         {/* Environment */}
         <div className="review-block">
-          <h3>🌡️ Environmental Conditions <span className="simulated-badge">[SIMULATED]</span></h3>
-          <p><strong>Temperature:</strong> {env.temperature} °C</p>
-          <p><strong>Humidity:</strong> {env.humidity} %</p>
-          <p><strong>CO2 Concentration:</strong> {env.co2_level} ppm</p>
+          <div className="review-block-header">
+            <span className="block-icon">🌡️</span>
+            <div>
+              <h3>Indoor Climate</h3>
+              <span className="simulated-badge-sm">SIMULATED</span>
+            </div>
+          </div>
+          <div className="review-block-body">
+            <div className="review-row">
+              <span className="label">Room Temperature</span>
+              <span className="value">{env.temperature} °C</span>
+            </div>
+            <div className="review-row">
+              <span className="label">Relative Humidity</span>
+              <span className="value">{env.humidity} %</span>
+            </div>
+            <div className="review-row">
+              <span className="label">CO₂ Concentration</span>
+              <span className="value">{env.co2_level} ppm</span>
+            </div>
+          </div>
         </div>
 
         {/* Operations */}
         <div className="review-block">
-          <h3>🧹 Operational Conditions <span className="simulated-badge">[SIMULATED]</span></h3>
-          <p><strong>Ventilation Status:</strong> {op.ventilation_status}</p>
-          <p><strong>Cleaning Interval:</strong> {op.cleaning_interval} hours</p>
+          <div className="review-block-header">
+            <span className="block-icon">🧹</span>
+            <div>
+              <h3>Infection Control Operations</h3>
+              <span className="simulated-badge-sm">SIMULATED</span>
+            </div>
+          </div>
+          <div className="review-block-body">
+            <div className="review-row">
+              <span className="label">Air Ventilation Quality</span>
+              <span className="value font-semibold">{op.ventilation_status}</span>
+            </div>
+            <div className="review-row">
+              <span className="label">Cleaning Frequency</span>
+              <span className="value font-semibold">{op.cleaning_interval} hours</span>
+            </div>
+          </div>
         </div>
       </div>
 
       <div className="step-footer flex-between">
-        <button className="btn-secondary" onClick={onPrev} disabled={isLoading}>
-          ← Edit Parameters
+        <button type="button" className="btn-secondary" onClick={onPrev} disabled={isLoading}>
+          ← Modify Parameters
         </button>
-        <button className="btn-primary btn-large" onClick={onPredict} disabled={isLoading}>
-          {isLoading ? <span className="spinner"></span> : '🚀 Predict Infection Risk'}
+        <button type="button" className="btn-predict-cta" onClick={onPredict} disabled={isLoading}>
+          {isLoading ? (
+            <span className="loading-state">
+              <span className="spinner"></span>
+              <span>Running Machine Learning Assessment...</span>
+            </span>
+          ) : (
+            <>
+              <span className="cta-icon">⚡</span>
+              <span>Execute Risk Assessment</span>
+              <span className="btn-arrow">→</span>
+            </>
+          )}
         </button>
       </div>
     </div>
